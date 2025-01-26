@@ -1,5 +1,6 @@
 let tasks=JSON.parse(localStorage.getItem('tasks')) || [];
         let btn = document.getElementById("addbtn");
+        const textelement = document.getElementById("text");
         let resultelement = document.getElementById("result");
         rendertask();
               btn.addEventListener('click', () => {
@@ -8,10 +9,16 @@ let tasks=JSON.parse(localStorage.getItem('tasks')) || [];
             alert("Please enter a valid task!");
         } else {
             tasks.push({ text: textelement, isCompleted: false });
-            document.getElementById("text").value = ""; // Clear input field
+           textelement.value = ""; // Clear input field
             rendertask(); // Render updated tasks
             localStorage.setItem('tasks',JSON.stringify(tasks))
         }
+    });
+        textelement.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+              btn.click();
+            }
+       
     });
 
     function rendertask() {
@@ -43,10 +50,8 @@ let tasks=JSON.parse(localStorage.getItem('tasks')) || [];
 
         resultelement.appendChild(divelement);
     });
+   
 }
-
-           
-
         function deletetask(index) {
             if(confirm("Are you sure you want to delete this task?")){
             tasks.splice(index, 1);
